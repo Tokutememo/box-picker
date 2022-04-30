@@ -20,7 +20,9 @@ html {
     }
 </style>
 
-<div class="grid">
+<button onclick="revertDeletion()">Revert</button>
+
+<div id="grid" class="grid">
 <img src="https://raw.githubusercontent.com/NedkoChulev/box-picker/main/mons/unit_icon_0007_4_0.png" alt="Aschubel portrait" loading="lazy" class="">
 <img src="https://raw.githubusercontent.com/NedkoChulev/box-picker/main/mons/unit_icon_0033_4_1.png" alt="Basalt portrait" loading="lazy" class="">
 <img src="https://raw.githubusercontent.com/NedkoChulev/box-picker/main/mons/unit_icon_0070_3_4.png" alt="Chacha and Friends portrait" loading="lazy" class="">
@@ -332,18 +334,26 @@ html {
 </div>
 
 <script type="text/javascript">
+    var deletedImgs = [];
+
     window.onload = () => {
         var imgs = document.getElementsByTagName('img');
         for (const image of imgs) {
             image.addEventListener('click', () => {
                 image.classList.toggle('nah');
-                console.log('click');
             });
 
             image.addEventListener('contextmenu', e => {
                 e.preventDefault();
+                deletedImgs.push(image);
                 image.remove();
             });
         }
+    }
+
+    function revertDeletion() {
+        const grid = document.getElementById('grid');
+        grid.appendChild(deletedImgs[deletedImgs.length - 1]);
+        deletedImgs.pop();
     }
 </script>
